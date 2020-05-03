@@ -1,14 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Grid } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import ActivityList from "./ActivityList";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 import ActivityStore from "../../../app/stores/activityStore";
-import ActivityDetails from "../details/ActivityDetails";
-import ActivityForm from "../forms/ActivityForm";
+
 
 const ActivityDashboard: React.FC = () => {
   const activityStore = useContext(ActivityStore);
-  const { editMode, selectedActivity } = activityStore;
+
+  useEffect(() => {
+    activityStore.loadActivies();
+  }, [
+    activityStore,
+  ]); /*this empty array is ensure to effect run once, because without it, when the component gets rerendenring
+  it's run again.*/
+  if (activityStore.loadingInitial)
+    return <LoadingComponent content="Loading acitivities..." />;
+
   return (
     <Grid>
       <Grid.Column width={10}>
@@ -16,13 +25,7 @@ const ActivityDashboard: React.FC = () => {
       </Grid.Column>
 
       <Grid.Column width={6}>
-        {selectedActivity && !editMode && <ActivityDetails />}
-        {editMode && (
-          <ActivityForm
-            key={(selectedActivity && selectedActivity.id) || 0}
-            activity={selectedActivity!}
-          />
-        )}
+        <h2>Activity filters</h2>
       </Grid.Column>
     </Grid>
   );

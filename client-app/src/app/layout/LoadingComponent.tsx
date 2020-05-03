@@ -1,7 +1,7 @@
 import React from "react";
 import { Dimmer, Loader } from "semantic-ui-react";
 
-export const LoaderComponent: React.FC<{
+const LoadingComponent: React.FC<{
   inverted?: boolean;
   content?: string;
 }> = ({ inverted = true, content }) => {
@@ -11,3 +11,5 @@ export const LoaderComponent: React.FC<{
     </Dimmer>
   );
 };
+
+export default LoadingComponent;
