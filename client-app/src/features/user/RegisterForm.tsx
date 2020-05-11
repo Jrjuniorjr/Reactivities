@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Form as FinalForm, Field } from "react-final-form";
-import { Form, Button, Label, Header } from "semantic-ui-react";
+import { Form, Button, Header } from "semantic-ui-react";
 import TextInput from "../../app/common/form/TextInput";
 import { RootStoreContext } from "../../app/stores/rootStore";
 import { IUserFormValues } from "../../app/models/user";
@@ -21,7 +21,7 @@ const RegisterForm = () => {
   return (
     <FinalForm
       onSubmit={(values: IUserFormValues) =>
-        register(values).catch((error) => ({
+        register(values).catch(error => ({
           [FORM_ERROR]: error,
         }))
       }
@@ -42,11 +42,7 @@ const RegisterForm = () => {
             textAlign="center"
           />
           <Field name="username" component={TextInput} placeholder="Username" />
-          <Field
-            name="displayName"
-            component={TextInput}
-            placeholder="DisplayName"
-          />
+          <Field name="displayName" component={TextInput} placeholder="Display Name" />
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field
             name="password"
@@ -55,7 +51,9 @@ const RegisterForm = () => {
             type="password"
           />
           {submitError && !dirtySinceLastSubmit && (
-            <ErrorMessage error={submitError} />
+            <ErrorMessage
+              error={submitError}
+            />            
           )}
           <Button
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
