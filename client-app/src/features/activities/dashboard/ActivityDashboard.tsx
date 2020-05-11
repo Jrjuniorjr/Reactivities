@@ -3,19 +3,19 @@ import { Grid } from "semantic-ui-react";
 import { observer } from "mobx-react-lite";
 import ActivityList from "./ActivityList";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
-import ActivityStore from "../../../app/stores/activityStore";
-
+import { RootStoreContext } from "../../../app/stores/rootStore";
 
 const ActivityDashboard: React.FC = () => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
+  const { loadActivies, loadingInitial } = rootStore.activityStore;
 
   useEffect(() => {
-    activityStore.loadActivies();
+    loadActivies();
   }, [
-    activityStore,
+    loadActivies,
   ]); /*this empty array is ensure to effect run once, because without it, when the component gets rerendenring
   it's run again.*/
-  if (activityStore.loadingInitial)
+  if (loadingInitial)
     return <LoadingComponent content="Loading acitivities..." />;
 
   return (
